@@ -34,7 +34,17 @@ function Header() {
         </IconButton>
       </div>
 
-      <Drawer open={showSettings} anchor="right" onClose={handleShowSettings}>
+      <Drawer
+        open={showSettings}
+        anchor="right"
+        onClose={handleShowSettings}
+        sx={{
+          '& .MuiDrawer-paper': {
+            transition: 'all 0.3s ease-out',
+            transform: showSettings ? 'translateX(0)' : 'translateX(100%)',
+          },
+        }}
+      >
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-4">Settings Panel</h2>
         </div>

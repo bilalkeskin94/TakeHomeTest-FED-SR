@@ -1,6 +1,6 @@
 import Header from './Header';
 import Sidebar from './Sidebar';
-import TabsComponent from './Tabs';
+import TabsComponent from './TabsComponent';
 
 function Main() {
   return (

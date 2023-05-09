@@ -1,13 +1,43 @@
 import { useState } from 'react';
-import { List, ListItem, ListItemIcon, ListItemText, IconButton, InputBase } from '@mui/material';
-import { Menu, Inbox, Category, PeopleAlt, Update, Chat, Mail, Search } from '@mui/icons-material';
+import { List, ListItem, ListItemIcon, ListItemText, IconButton, Popover } from '@mui/material';
+import { Menu, Inbox, Category, PeopleAlt, Update, Chat, Mail, Search, ExpandLess, ExpandMore } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
+import SidebarItem from './SidebarItem';
+import SidebarCategorySubMenu from './SidebarCategorySubMenu';
 
 function Sidebar(): JSX.Element {
   const [showExtendedSidebar, setShowExtendedSidebar] = useState(false);
+  const [showCategorySubMenu, setShowCategorySubMenu] = useState(false);
+  const [inboxPopoverOpen, setInboxPopoverOpen] = useState(false);
+  const [chatPopoverOpen, setChatPopoverOpen] = useState(false);
+  const [popoverAnchorEl, setPopoverAnchorEl] = useState(null);
 
   const handleShowExtendedSidebar = () => {
     setShowExtendedSidebar(!showExtendedSidebar);
+  };
+
+  const handleShowCategorySubMenu = () => {
+    setShowCategorySubMenu(!showCategorySubMenu);
+  };
+
+  const handleInboxPopoverOpen = (event) => {
+    setPopoverAnchorEl(event.currentTarget);
+    setInboxPopoverOpen(true);
+  };
+
+  const handleInboxPopoverClose = () => {
+    setPopoverAnchorEl(null);
+    setInboxPopoverOpen(false);
+  };
+
+  const handleChatPopoverOpen = (event) => {
+    setPopoverAnchorEl(event.currentTarget);
+    setChatPopoverOpen(true);
+  };
+
+  const handleChatPopoverClose = () => {
+    setPopoverAnchorEl(null);
+    setChatPopoverOpen(false);
   };
 
   return (
@@ -24,27 +54,28 @@ function Sidebar(): JSX.Element {
 
         <div className="flex-1 bg-gray-200 px-4 py-2 overflow-y-auto">
           <List>
-            <ListItem button className="py-3">
-              <ListItemIcon>
-                <Mail />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItem>
-
-            <ListItem button className="py-3">
-              <ListItemIcon>
-                <Category />
-              </ListItemIcon>
-              <ListItemText primary="Categories" />
-            </ListItem>
-
-            <ListItem button className="py-3">
-              <ListItemIcon>
-                <Update />
-              </ListItemIcon>
-              <ListItemText primary="Updates" />
-            </ListItem>
+            <div onMouseEnter={handleInboxPopoverOpen}>
+              <SidebarItem icon={<Mail />} text="Inbox" />
+            </div>
+            <div onMouseEnter={handleChatPopoverOpen}>
+              <SidebarItem icon={<Chat />} text="Chat" />
+            </div>
           </List>
+          <Popover
+            open={inboxPopoverOpen || chatPopoverOpen}
+            onClose={inboxPopoverOpen ? handleInboxPopoverClose : handleChatPopoverClose}
+            anchorEl={popoverAnchorEl}
+            anchorOrigin={{
+              vertical: 'center',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'center',
+              horizontal: 'left',
+            }}
+          >
+            <div className="p-4">{inboxPopoverOpen ? "Inbox Popover" : "Chat Popover"}</div>
+          </Popover>
         </div>
       </div>
 
@@ -58,40 +89,17 @@ function Sidebar(): JSX.Element {
             transition={{ duration: 0.3 }}
           >
             <List>
-              <ListItem button className="py-3">
-                <ListItemIcon>
-                  <Inbox />
-                </ListItemIcon>
-                <ListItemText primary="Primary" />
-              </ListItem>
-
-              <ListItem button className="py-3">
-                <ListItemIcon>
-                  <PeopleAlt />
-                </ListItemIcon>
-                <ListItemText primary="Social" />
-              </ListItem>
-
-              <ListItem button className="py-3">
-                <ListItemIcon>
-                  <Category />
-                </ListItemIcon>
-                <ListItemText primary="Promotions" />
-              </ListItem>
-
-              <ListItem button className="py-3">
-                <ListItemIcon>
-                  <Update />
-                </ListItemIcon>
-                <ListItemText primary="Updates" />
-              </ListItem>
-
-              <ListItem button className="py-3">
-                <ListItemIcon>
-                  <Inbox />
-                </ListItemIcon>
-                <ListItemText primary="Forums" />
-              </ListItem>
+              <SidebarItem
+                icon={<Inbox />}
+                text="Primary"
+              />
+              <SidebarItem
+                icon={<Category />}
+                text="Categories"
+                onClick={handleShowCategorySubMenu}
+                expandIcon={showCategorySubMenu ? <ExpandLess /> : <ExpandMore />}
+              />
+              <SidebarCategorySubMenu show={showCategorySubMenu} handleSubMenuClick={handleShowCategorySubMenu} />
             </List>
           </motion.div>
         )}

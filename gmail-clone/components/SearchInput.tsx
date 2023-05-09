@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { InputBase, IconButton, Popover, Paper } from "@mui/material";
+import { InputBase, IconButton, Popover, Paper, Button } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
-import { useTheme } from "@mui/material/styles";
-import { alpha } from "@mui/material/styles";
 
 const SearchInput: React.FC = () => {
-  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -65,18 +62,9 @@ const SearchInput: React.FC = () => {
                 placeholder="To"
                 className="border-b-2 border-gray-300"
               />
-              <InputBase
-                placeholder="Subject"
-                className="border-b-2 border-gray-300"
-              />
-              <InputBase
-                placeholder="Has the words"
-                className="border-b-2 border-gray-300"
-              />
-              <InputBase
-                placeholder="Doesn't have"
-                className="border-b-2 border-gray-300"
-              />
+              <Button sx={{
+                'background': 'red'
+              }} variant="outlined" color="primary">Send</Button>
             </div>
           </Paper>
         </Popover>
