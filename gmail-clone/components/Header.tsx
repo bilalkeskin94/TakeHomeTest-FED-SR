@@ -12,7 +12,7 @@ function Header() {
   };
 
   return (
-    <header className="flex items-center vh-100 justify-between bg-white px-4 py-2 shadow">
+    <header className="flex items-center vh-100 justify-between bg-gray-200 px-4 py-2 shadow">
 
       <div className="flex-grow">
         <SearchInput />

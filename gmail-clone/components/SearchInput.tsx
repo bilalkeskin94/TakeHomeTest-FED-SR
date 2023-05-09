@@ -4,7 +4,7 @@ import { Search as SearchIcon } from "@mui/icons-material";
 import { useTheme } from "@mui/material/styles";
 import { alpha } from "@mui/material/styles";
 
-const SearchInput = () => {
+const SearchInput: React.FC = () => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -22,11 +22,11 @@ const SearchInput = () => {
   return (
     <div className="relative">
       <div className="absolute inset-y-0 z-10 flex items-center pl-2">
-      <SearchIcon className="text-gray-500" />
+        <SearchIcon className="text-gray-500" />
       </div>
       <InputBase
         placeholder="Search mail"
-        className="pl-10 pr-4 py-3 w-full bg-gray-100 rounded-lg focus:outline-none focus:bg-white"
+        className="pl-10 pr-4 py-3 w-full bg-white rounded-lg focus:outline-none focus:bg-white"
         inputProps={{ "aria-label": "search mail" }}
       />
       <div className="absolute inset-y-0 right-0 flex items-center pr-2">
