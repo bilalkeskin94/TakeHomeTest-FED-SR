@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { IconButton, Drawer, Menu, MenuItem, TextField, InputAdornment, FormControl, Select, OutlinedInput, Box } from '@mui/material';
 import { Settings, Apps, AccountCircle, Search, ArrowDropDown } from '@mui/icons-material';
+import SearchInput from './SearchInput';
 
 function Header() {
   const [showSettings, setShowSettings] = useState(false);
@@ -10,47 +11,15 @@ function Header() {
     setShowSettings(!showSettings);
   };
 
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value);
-  };
-
   return (
-    <header className="flex items-center justify-between bg-white px-4 py-2 shadow">
-      <div className="flex items-center">
+    <header className="flex items-center vh-100 justify-between bg-white px-4 py-2 shadow">
 
-        <FormControl variant="outlined">
-          <OutlinedInput
-            placeholder="Search mail"
-            startAdornment={
-              <InputAdornment position="start">
-                <Search />
-              </InputAdornment>
-            }
-            sx={{ width: 400, mr: 2 }}
-          />
-        </FormControl>
-
-        <FormControl variant="outlined" sx={{ minWidth: 120 }}>
-          <Select
-            value={filter}
-            onChange={handleFilterChange}
-            startIcon={<ArrowDropDown />}
-          >
-            <MenuItem value="All">All Mail</MenuItem>
-            <MenuItem value="Social">Social</MenuItem>
-            <MenuItem value="Promotions">Promotions</MenuItem>
-            <MenuItem value="Updates">Updates</MenuItem>
-            <MenuItem value="Forums">Forums</MenuItem>
-          </Select>
-        </FormControl>
+      <div className="flex-grow">
+        <SearchInput />
       </div>
 
       <div className="flex items-center">
-        <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-          <TextField size="small" label="From" variant="outlined" sx={{ mr: 2 }} />
-          <TextField size="small" label="Subject" variant="outlined" sx={{ mr: 2 }} />
-          <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Search</button>
-        </Box>
+        
 
         <IconButton onClick={handleShowSettings} sx={{ ml: 2 }}>
           <Settings />
@@ -68,7 +37,6 @@ function Header() {
       <Drawer open={showSettings} anchor="right" onClose={handleShowSettings}>
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-4">Settings Panel</h2>
-          {/* Leave blank */}
         </div>
       </Drawer>
     </header>
